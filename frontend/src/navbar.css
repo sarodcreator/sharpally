@@ -1,0 +1,26 @@
+.navbar {
+    padding: 120px 20px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    max-width: 4.5rem;
+}
+.job {
+    color:#A1045A;
+}
+.logo {
+    font-weight: 600px;
+    font-size: 24px;
+    color: #4B0082;
+    font-family: roboto;
+}
+.nav ul{
+    display: flex;
+    gap: 5px;
+}
+.nav li {
+    list-style-type: none;
+    color: #121212;
+    font-size: medium;
+}
