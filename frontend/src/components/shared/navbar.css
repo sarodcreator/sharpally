@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+
+.navbar {
+    padding: 8px 100px;
+    font-family: 'Open Sans', serif;
+    justify-content: space-between;
+    display: flex;
+    /*background-color: #f0f4f8;*/
+    align-items: center;
+    position: sticky;
+    box-sizing: border-box;
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+    color: #121212;
+}
+
+.logo {
+    color: #1c3f3f;
+    font-family: 'Limelight', serif;
+    font-size: 12px;
+}
+
+.nav ul {
+    display: flex;
+    gap: 24px;
+    padding: 8px;
+}
+
+.nav li {
+    list-style-type: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #a7d3e0;
+    margin: 4px;
+}
+.nav li:hover {
+    border-bottom: 2px solid #1c3f3f;
+    transform: translateY(-4px);
+    color: #1c3f3f;
+    cursor: pointer;
+}
+
+.job {
+    color: #a7d3e0
+}
+
+.profile {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background-position: center;
+}
+.container {
+    background-color: #fcfcfc;
+    border: 1px solid #7272721f;
+    box-shadow: -1px 2px #72727271;
+    padding: 16px;
+    border-radius: 16px;
+    margin-top: 8px;
+    margin-right: 100px;
+}
+.container-cont {
+    display: flex;
+    gap: 8px;
+    align-items: top;
+}
+.container-cont p {
+    opacity: 0.7;
+    font-size: 12px;
+}
+.view-profile {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    margin-top: 8px;
+    color: #121212;
+    cursor: pointer;
+}
+.view-profile:hover{
+    background: #7272721f;
+}
+
+.auth-btn {
+    padding: 8px 16px;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600px;
+    color: #1c3f3f;
+}
+.reg {
+    background-color: #1c3f3f;
+    color: #fcfcfc;
+}
+.auth-btn:hover{
+    background-color:rgb(0, 148, 148);
+    color: #fcfcfc;
+}

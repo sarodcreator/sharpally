@@ -12,4 +12,4 @@ const Avatar = React.forwardRef(({ className, ...props }, ref) => (
 
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
-export default avatar;
+export default Avatar;
