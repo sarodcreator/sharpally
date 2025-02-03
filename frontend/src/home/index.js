@@ -3,7 +3,7 @@ import './index.css';
 import Header from '../components/shared/navbar.js';
 import HeroSection from '../components/shared/herosection.js'
 import CategorySec from '../components/shared/categorycarousel.js';
-import LatestJobs from '../components/shared/LatestJobs.js';
+import LatestJobs from '../components/shared/latestjobs.js';
 
 const index = () => {
   return (
