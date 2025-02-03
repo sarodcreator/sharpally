@@ -14,3 +14,5 @@ const LatestJobs = () => {
 </div>
 )
 }
+
+export default LatestJobs;
