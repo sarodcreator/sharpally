@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import "swiper/css";
+import "./style.css";
 import "swiper/css/navigation";
 
 const categories = [
@@ -14,8 +14,9 @@ const categories = [
 
 const CategoryCarousel = () => {
   return (
-    <div className="w-full max-w-xl mx-auto my-20">
-      <h2 className="text-xl font-bold text-center mb-6">Browse talent by category</h2>
+    <div className="carousel-sec">
+      <h2 className="text-head">Browse talent by category</h2>
+      p.
       <Swiper
         modules={[Navigation]}
         spaceBetween={30}
@@ -25,10 +26,10 @@ const CategoryCarousel = () => {
       >
         {categories.map((cat, index) => (
           <SwiperSlide key={index}>
-            <div className="p-6 border rounded-lg shadow-md text-center bg-white">
-              <h3 className="text-lg font-semibold">{cat.name}</h3>
-              <p className="text-sm text-gray-600">⭐ {cat.rating}</p>
-              <p className="text-sm text-gray-500">{cat.skills}</p>
+            <div className="rate-sec">
+              <h3 className="text">{cat.name}</h3>
+              <p className="rate">⭐ {cat.rating}</p>
+              <p className="rate">{cat.skills}</p>
             </div>
           </SwiperSlide>
         ))}
