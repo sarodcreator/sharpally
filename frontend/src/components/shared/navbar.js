@@ -1,5 +1,5 @@
 import React from 'react';
-import "./navbar.css";
+import "./style.css";
 import { Link } from 'react-router-dom';
 import { Popover, PopoverTrigger, PopoverContent } from '@radix-ui/react-popover';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
