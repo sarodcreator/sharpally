@@ -1,6 +1,9 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
-import './style.css'
+import './style.css';
+import Image1 from '../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg';
+import Image2 from '../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
+import Image3 from '../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
 
 const herosection = () => {
   return (
@@ -17,9 +20,12 @@ const herosection = () => {
               </div>
           </div>
           <div className='hero-img-grid'>
-            <img src='../../images/black-man-city.jpg' alt='person 1' className='masked-img img1' />
-            <img src='../../images/janis-dzenis-Qk3wDzNKnF0-unsplash.jpg' alt='person 1' className='masked-img img2' />
-            <img src='../../images/janis-dzenis-Qk3wDzNKnF0-unsplash.jpg' alt='person 1' className='masked-img img3' />
+            <img src={Image1} alt='person 1' className='masked-img img1' />
+            <img src={Image2} alt='person 1' className='masked-img img2' />
+            <img src={Image3} alt='person 1' className='masked-img img3' />
+            <img src={Image3} alt='person 1' className='masked-img img3' />
+              <img src={Image3} alt='person 1' className='masked-img img3' />
+              <img src={Image3} alt='person 1' className='masked-img img3' />
 
           </div>
       </div>
