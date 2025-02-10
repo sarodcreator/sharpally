@@ -11,9 +11,11 @@ import { SRGBColorSpace } from 'three';
 function Cube({ progress }) {
     const mesh = useRef(null);
 
-    // Load textures and ensure correct color space
+    // Load textures
     const texturePaths = [Image1, Image2, Image3, Image1, Image2, Image3];
     const textures = useLoader(TextureLoader, texturePaths);
+
+    // Ensure textures use the correct color space
     textures.forEach(texture => (texture.colorSpace = SRGBColorSpace));
 
     // State for split effect
@@ -49,62 +51,50 @@ function Cube({ progress }) {
         }, 2000);
     };
 
-    // Apply continuous rotation when not split
+    // Apply continuous rotation
     useFrame(() => {
-        if (mesh.current && !isSplit) {
+        if (mesh.current && !isSplit) { // Rotate only when cube is whole
             mesh.current.rotation.x += rotationSpeed.current.x;
             mesh.current.rotation.y += rotationSpeed.current.y;
             mesh.current.rotation.z += rotationSpeed.current.z;
         }
     });
 
-    // Ensure rotation updates properly when progress changes
-    useEffect(() => {
-        if (mesh.current) {
-            mesh.current.rotation.y = progress;
-            mesh.current.rotation.x = progress;
-        }
-    }, [progress]);
-
     return (
         <motion.group
             ref={mesh}
+            rotation-y={progress}
+            rotation-x={progress}
             onPointerEnter={handleMouseEnter}
         >
-            {/* Front Face */}
-            <motion.mesh position={[0, 0, positions[0].get()]}>
+            <motion.mesh position-z={positions[0]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[0]} attach="material" />
+                <meshStandardMaterial map={textures[0]} attach="material-0" />
             </motion.mesh>
 
-            {/* Back Face */}
-            <motion.mesh position={[0, 0, positions[1].get()]}>
+            <motion.mesh position-z={positions[1]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[1]} attach="material" />
+                <meshStandardMaterial map={textures[1]} attach="material-1" />
             </motion.mesh>
 
-            {/* Left Face */}
-            <motion.mesh position={[positions[2].get(), 0, 0]}>
+            <motion.mesh position-x={positions[2]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[2]} attach="material" />
+                <meshStandardMaterial map={textures[2]} attach="material-2" />
             </motion.mesh>
 
-            {/* Right Face */}
-            <motion.mesh position={[positions[3].get(), 0, 0]}>
+            <motion.mesh position-x={positions[3]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[3]} attach="material" />
+                <meshStandardMaterial map={textures[3]} attach="material-3" />
             </motion.mesh>
 
-            {/* Top Face */}
-            <motion.mesh position={[0, positions[4].get(), 0]}>
+            <motion.mesh position-y={positions[4]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[4]} attach="material" />
+                <meshStandardMaterial map={textures[4]} attach="material-4" />
             </motion.mesh>
 
-            {/* Bottom Face */}
-            <motion.mesh position={[0, positions[5].get(), 0]}>
+            <motion.mesh position-y={positions[5]}>
                 <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[5]} attach="material" />
+                <meshStandardMaterial map={textures[5]} attach="material-5" />
             </motion.mesh>
         </motion.group>
     );
