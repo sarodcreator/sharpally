@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import Image1 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
 import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
@@ -33,13 +33,16 @@ const CubeContainer = styled.div`
   cursor: pointer;
 `;
 
-
 const Cube = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  animation: ${css`${rotateAnimation} 10s infinite linear`};
+  animation: ${({ isDisassembled }) =>
+    isDisassembled ? 'none' : css`${rotateAnimation} 10s infinite linear`};
+  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'scale(2)' : 'scale(1)')};
 `;
 
 const CubeFace = styled.div`
@@ -49,36 +52,35 @@ const CubeFace = styled.div`
   background-size: cover;
   background-position: center;
   border: 2px solid black;
-  transition: transform 1s ease-in-out;
 `;
 
 const FrontFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(300px)' : 'translateZ(100px)')};
+  transform: translateZ(100px);
   background-image: url(${Image1});
 `;
 
 const BackFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(-300px)' : 'translateZ(-100px) rotateY(180deg)')};
+  transform: translateZ(-100px) rotateY(180deg);
   background-image: url(${Image2});
 `;
 
 const RightFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateX(300px)' : 'rotateY(90deg) translateZ(100px)')};
+  transform: rotateY(90deg) translateZ(100px);
   background-image: url(${Image3});
 `;
 
 const LeftFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateX(-300px)' : 'rotateY(-90deg) translateZ(100px)')};
+  transform: rotateY(-90deg) translateZ(100px);
   background-image: url(${Image4});
 `;
 
 const TopFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateY(-300px)' : 'rotateX(90deg) translateZ(100px)')};
+  transform: rotateX(90deg) translateZ(100px);
   background-image: url(${Image5});
 `;
 
 const BottomFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateY(300px)' : 'rotateX(-90deg) translateZ(100px)')};
+  transform: rotateX(-90deg) translateZ(100px);
   background-image: url(${Image6});
 `;
 
@@ -86,19 +88,28 @@ const CubeViewer = () => {
   const [isDisassembled, setIsDisassembled] = useState(false);
 
   const handleClick = () => {
-    setIsDisassembled(!isDisassembled);
+    setIsDisassembled(true);
   };
+
+  useEffect(() => {
+    if (isDisassembled) {
+      const timer = setTimeout(() => {
+        setIsDisassembled(false);
+      }, 500); // Reassemble after 0.5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [isDisassembled]);
 
   return (
     <ScrollableContainer>
       <CubeContainer onClick={handleClick}>
         <Cube isDisassembled={isDisassembled}>
-          <FrontFace isDisassembled={isDisassembled} />
-          <BackFace isDisassembled={isDisassembled} />
-          <RightFace isDisassembled={isDisassembled} />
-          <LeftFace isDisassembled={isDisassembled} />
-          <TopFace isDisassembled={isDisassembled} />
-          <BottomFace isDisassembled={isDisassembled} />
+          <FrontFace />
+          <BackFace />
+          <RightFace />
+          <LeftFace />
+          <TopFace />
+          <BottomFace />
         </Cube>
       </CubeContainer>
     </ScrollableContainer>
