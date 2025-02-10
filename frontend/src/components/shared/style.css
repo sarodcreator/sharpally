@@ -270,17 +270,77 @@
 }
 .job-heading{
     display: flex;
-    justify-content: flex-start;
     gap: 8px;
+}
+.cd {
+	margin-bottom: 8px;
 }
 .company-det{
     display: flex;
-    flex-direction: 4px;
+    flex-direction: column !important;
+    margin: 0;
 }
 .company-det h1 {
     font-weight: 500;
     font-size: 32px;
     font-family: 'Open Sans', serif;
+}
+.company-det p {
+	font-size: 18px !important;
+	color: #727272;
+	font-weight: 500;
+}
+.jobSec {
+	margin-top: 16px;
+}
+.jobSec h1 {
+	color: #12121;
+	font-family: 'Open Sans', serif;
+}
+.jobSec p{
+	font-size: 16px;
+	color: #727272;
+	font-family: 'Open Sans', serif;
+}
+.jobinfo{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 24px;
+}
+.jobinfo .badge{
+	color: white;
+	padding: 4px 10px;
+	border-radius: 8px;
+}
+.O{
+	background-color: #FF5C5C;
+}
+.P{
+	background-color: #610C04;
+}
+.R{
+	background-color: #750000;
+}
+
+/* latest jobs */
+.latestJobSec {
+    background-color: #fcfcfc;
+    border-radius: 16px;
+    box-shadow: -1px 2px #72727271;
+    box-sizing: border-box;
+    padding: 40px 24px;
+    border: 1px solid rgba(18, 18, 18, 0.08);
+    width: 100%;
+    }
+.latestJobTitle {
+	font-size: 32px;
+	font-weight: 600;
+	font-family: 'Open Sans', serif;
+	color: #121212;
+}
+.latestjobTitle span {
+	color: #121212;
 }
 /* service grid */
 .service-grid {

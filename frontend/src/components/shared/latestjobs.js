@@ -8,7 +8,7 @@ const LatestJobs = () => {
     return (
         <div>
             <div className="latestJobSec">
-                <h1 className='LatestJobTitle'>Latest and Top<span className="listings">job listings</span></h1>
+                <h1 className='LatestJobTitle'>Latest and Top <span className="listings">job listings</span></h1>
                 <div className="cards">
                     {
                     randomJobs.slice(0,6).map((item, index) => <LatestJobCards />)

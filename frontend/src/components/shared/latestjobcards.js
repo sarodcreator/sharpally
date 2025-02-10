@@ -3,19 +3,19 @@ import "./style.css";
 
 const JobCards = () => {
   return (
-    <div className="categorySec">
+    <div className="categorySec cd">
       <div className="job-heading">
-        <img src="" alt="company image" className="companyLogo"/>
+        <img src="https://images.app.goo.gl/QEoK2WkQeM7zQAZSA" alt="company image" className="companyLogo"/>
         <div className="company-det">
           <h1>Company Name</h1>
-          <p>Country</p>
+          <p >Country</p>
         </div>
       </div>
-      <div>
+      <div className="jobSec">
         <h1>Job Title</h1>
         <p>Job Description</p>
       </div>
-      <div>
+      <div className="jobinfo">
         <p className="badge O">Open position</p>
         <p className="badge P">Part time</p>
         <p className="badge R">Remote</p>

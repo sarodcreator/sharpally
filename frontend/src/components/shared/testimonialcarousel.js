@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import TestimonialCard from "./TestimonialCard";
+import TestimonialCard from "./testimonialCard";
 import './style.css';
 
 const testimonials = [
