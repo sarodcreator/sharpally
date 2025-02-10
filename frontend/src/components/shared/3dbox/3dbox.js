@@ -3,9 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { motion } from 'framer-motion-3d';
 import { useSpring, useMotionValue } from 'framer-motion';
-/*import Image1 from '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg';
-import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
-import Image3 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';*/
 import { SRGBColorSpace } from 'three';
 
 function Cube({ progress }) {
@@ -13,12 +10,14 @@ function Cube({ progress }) {
 
     // Load textures
     const texturePaths = [
-'../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
- '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
- '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg',
- '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
- '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
- '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg'];
+        '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
+        '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg',
+        '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
+        '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
+        '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg'
+    ];
+    
     const textures = useLoader(TextureLoader, texturePaths);
 
     // Ensure textures use the correct color space
@@ -27,11 +26,9 @@ function Cube({ progress }) {
     // State for split effect
     const [isSplit, setIsSplit] = useState(false);
 
-    // Motion values for face separation
-    const positions = Array(6).fill(null).map(() => {
-        const motionValue = useMotionValue(0);
-        return useSpring(motionValue, { damping: 10, stiffness: 100 });
-    });
+    // Motion values for face separation (move outside of .map())
+    const motionValues = Array(6).fill(null).map(() => useMotionValue(0));
+    const positions = motionValues.map(mv => useSpring(mv, { damping: 10, stiffness: 100 }));
 
     // Automatic rotation speeds (randomized)
     const rotationSpeed = useRef({
@@ -53,7 +50,7 @@ function Cube({ progress }) {
         // Reassemble after 2 seconds
         setTimeout(() => {
             setIsSplit(false);
-            positions.forEach(p => p.set(0)); // Move all faces back
+            positions.forEach(pos => pos.set(0)); // Move all faces back
         }, 2000);
     };
 
@@ -73,35 +70,12 @@ function Cube({ progress }) {
             rotation-x={progress}
             onPointerEnter={handleMouseEnter}
         >
-            <motion.mesh position-z={positions[0]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[0]} attach="material-0" />
-            </motion.mesh>
-
-            <motion.mesh position-z={positions[1]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[1]} attach="material-1" />
-            </motion.mesh>
-
-            <motion.mesh position-x={positions[2]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[2]} attach="material-2" />
-            </motion.mesh>
-
-            <motion.mesh position-x={positions[3]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[3]} attach="material-3" />
-            </motion.mesh>
-
-            <motion.mesh position-y={positions[4]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[4]} attach="material-4" />
-            </motion.mesh>
-
-            <motion.mesh position-y={positions[5]}>
-                <boxGeometry args={[2.5, 2.5, 2.5]} />
-                <meshStandardMaterial map={textures[5]} attach="material-5" />
-            </motion.mesh>
+            {positions.map((position, i) => (
+                <motion.mesh key={i} position={i < 2 ? [0, 0, position] : i < 4 ? [position, 0, 0] : [0, position, 0]}>
+                    <boxGeometry args={[2.5, 2.5, 2.5]} />
+                    <meshStandardMaterial map={textures[i]} />
+                </motion.mesh>
+            ))}
         </motion.group>
     );
 }
