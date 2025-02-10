@@ -342,6 +342,46 @@
 .latestjobTitle span {
 	color: #121212;
 }
+
+/*testimonial section */
+.testimonials-section {
+	background-color: #fcfcfc;
+    border-radius: 16px;                                   box-shadow: -1px 2px #72727271;
+    box-sizing: border-box;
+    padding: 40px 24px;
+    border: 1px solid rgba(18, 18, 18, 0.08);
+    width: 100%;
+    }
+.testimonial-card {
+	 background-color: rgba(18, 18, 18, 0.5);
+  backdrop-filter: blur(300px);
+  -webkit-backdrop-filter: blur(300px);
+    border-radius: 16px;                                   box-shadow: -1px 2px #72727271;
+    box-sizing: border-box;
+    padding: 24px;
+    border: 1px solid rgba(18, 18, 18, 0.08);
+    width: 100%;
+    color: #F2F3F4;
+ }
+#rate {
+	 font-size: 32px ;
+	 font-weight: 600;
+	 font-family: 'Open Sans', serif;
+	 color: #fcfcfc;
+ }
+
+ #rev-name{
+	 font-size: 16px;
+	 font-family: 'Open Sans', serif;
+	 font-weight: 600;
+	 color: #fcfcfc;
+ }
+ #role {
+	 font-size: 14px;
+	 margin-top: -16px;
+		 font-family: 'Open Sans', serif;
+ }
+	 
 /* service grid */
 .service-grid {
   display: flex;

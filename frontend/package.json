@@ -27,8 +27,9 @@
     "react-slick": "^0.30.3",
     "react-toastify": "^11.0.3",
     "sass": "^1.84.0",
+    "slick-carousel": "^1.8.1",
     "swiper": "^11.2.2",
-    "three": "^0.173.0"
+    "three": "^0.149.0"
   },
   "scripts": {
     "start": "react-scripts start",
