@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import Image1 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
 import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
 import Image3 from '../../../images/surface-91HFUXYi_Jg-unsplash.jpg';
@@ -33,13 +33,13 @@ const CubeContainer = styled.div`
   cursor: pointer;
 `;
 
+
 const Cube = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  animation: ${({ isDisassembled }) => (isDisassembled ? 'none' : `${rotateAnimation} 10s infinite linear ease-in-out`)};
-  will-change: transform;
+  animation: ${css`${rotateAnimation} 10s infinite linear`};
 `;
 
 const CubeFace = styled.div`
