@@ -1,5 +1,5 @@
 import { useFrame, useLoader } from '@react-three/fiber';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { motion } from 'framer-motion-3d';
 import { useSpring, useMotionValue } from 'framer-motion';
