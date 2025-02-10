@@ -77,7 +77,7 @@ function Cube({ progress }) {
 
   return (
     <motion.group ref={mesh} rotation-y={progress} rotation-x={progress} onPointerEnter={handleMouseEnter}>
-      {/* Cube Faces */}
+      //Cube Faces
       <motion.mesh position={[0, 0, position0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[0]} />
