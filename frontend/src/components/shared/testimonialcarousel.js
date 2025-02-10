@@ -1,7 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
 import TestimonialCard from "./testimonialCard";
-import './style.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./style.css";
 
 const testimonials = [
   {
@@ -34,6 +36,14 @@ const Testimonials = () => {
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768, // Mobile view
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
