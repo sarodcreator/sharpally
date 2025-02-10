@@ -3,16 +3,22 @@ import { useState, useRef, useEffect } from 'react';
 import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { motion } from 'framer-motion-3d';
 import { useSpring, useMotionValue } from 'framer-motion';
-import Image1 from '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg';
+/*import Image1 from '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg';
 import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
-import Image3 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
+import Image3 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';*/
 import { SRGBColorSpace } from 'three';
 
 function Cube({ progress }) {
     const mesh = useRef(null);
 
     // Load textures
-    const texturePaths = [Image1, Image2, Image3, Image1, Image2, Image3];
+    const texturePaths = [
+'../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
+ '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
+ '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg',
+ '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg',
+ '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg',
+ '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg'];
     const textures = useLoader(TextureLoader, texturePaths);
 
     // Ensure textures use the correct color space
