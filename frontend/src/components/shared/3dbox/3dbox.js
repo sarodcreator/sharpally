@@ -1,4 +1,4 @@
-import { useFrame, useLoader } from "@react-three/fiber";
+/*import { useFrame, useLoader } from "@react-three/fiber";
 import { useState, useRef } from "react";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { motion } from "framer-motion-3d";
@@ -112,3 +112,88 @@ function Cube({ progress }) {
 }
 
 export default Cube;
+*/
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+const CubeContainer = styled.div`
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 800px;
+  margin:250px;
+`;
+
+const Cube = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: ${({ rotation }) => rotation};
+`;
+
+const CubeFace = styled.div`
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  background-color: ${({ color }) => color};
+  border: 2px solid black;
+`;
+
+const FrontFace = styled(CubeFace)`
+  transform: translateZ(100px);
+`;
+
+const BackFace = styled(CubeFace)`
+  transform: translateZ(-100px) rotateY(180deg);
+`;
+
+const RightFace = styled(CubeFace)`
+  transform: rotateY(90deg) translateZ(100px);
+`;
+
+const LeftFace = styled(CubeFace)`
+  transform: rotateY(-90deg) translateZ(100px);
+`;
+
+const TopFace = styled(CubeFace)`
+  transform: rotateX(90deg) translateZ(100px);
+`;
+
+const BottomFace = styled(CubeFace)`
+  transform: rotateX(-90deg) translateZ(100px);
+`;
+
+const CubeViewer = () => {
+    const [rotation, setRotation] = useState({ x: 0, y: 0 });
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setRotation({ x: -e.clientY, y: e.clientX });
+        };
+
+        document.addEventListener('mousemove',
+            handleMouseMove);
+
+        return () => {
+            document.removeEventListener('mousemove',
+                handleMouseMove);
+        };
+    }, []);
+
+    return (
+        <CubeContainer>
+            <Cube rotation={`
+            rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`}>
+                <FrontFace color="red"></FrontFace>
+                <BackFace color="blue"></BackFace>
+                <RightFace color="green"></RightFace>
+                <LeftFace color="yellow"></LeftFace>
+                <TopFace color="orange"></TopFace>
+                <BottomFace color="purple"></BottomFace>
+            </Cube>
+        </CubeContainer>
+    );
+};
+
+export default CubeViewer;
