@@ -41,8 +41,6 @@ const Cube = styled.div`
   animation: ${({ isDisassembled }) =>
     isDisassembled ? 'none' : css`${rotateAnimation} 10s infinite linear`};
   will-change: transform;
-  transition: transform 0.5s ease-in-out;
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'scale(2)' : 'scale(1)')};
 `;
 
 const CubeFace = styled.div`
@@ -52,35 +50,36 @@ const CubeFace = styled.div`
   background-size: cover;
   background-position: center;
   border: 2px solid black;
+  transition: transform 0.5s ease-in-out;
 `;
 
 const FrontFace = styled(CubeFace)`
-  transform: translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(300px)' : 'translateZ(100px)')};
   background-image: url(${Image1});
 `;
 
 const BackFace = styled(CubeFace)`
-  transform: translateZ(-100px) rotateY(180deg);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(-300px) rotateY(180deg)' : 'translateZ(-100px) rotateY(180deg)')};
   background-image: url(${Image2});
 `;
 
 const RightFace = styled(CubeFace)`
-  transform: rotateY(90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(90deg) translateZ(300px)' : 'rotateY(90deg) translateZ(100px)')};
   background-image: url(${Image3});
 `;
 
 const LeftFace = styled(CubeFace)`
-  transform: rotateY(-90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(-90deg) translateZ(300px)' : 'rotateY(-90deg) translateZ(100px)')};
   background-image: url(${Image4});
 `;
 
 const TopFace = styled(CubeFace)`
-  transform: rotateX(90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(90deg) translateZ(300px)' : 'rotateX(90deg) translateZ(100px)')};
   background-image: url(${Image5});
 `;
 
 const BottomFace = styled(CubeFace)`
-  transform: rotateX(-90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(-90deg) translateZ(300px)' : 'rotateX(-90deg) translateZ(100px)')};
   background-image: url(${Image6});
 `;
 
@@ -104,12 +103,12 @@ const CubeViewer = () => {
     <ScrollableContainer>
       <CubeContainer onClick={handleClick}>
         <Cube isDisassembled={isDisassembled}>
-          <FrontFace />
-          <BackFace />
-          <RightFace />
-          <LeftFace />
-          <TopFace />
-          <BottomFace />
+          <FrontFace isDisassembled={isDisassembled} />
+          <BackFace isDisassembled={isDisassembled} />
+          <RightFace isDisassembled={isDisassembled} />
+          <LeftFace isDisassembled={isDisassembled} />
+          <TopFace isDisassembled={isDisassembled} />
+          <BottomFace isDisassembled={isDisassembled} />
         </Cube>
       </CubeContainer>
     </ScrollableContainer>
