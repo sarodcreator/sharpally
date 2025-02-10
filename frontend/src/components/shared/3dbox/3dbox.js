@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Image1 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
 import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
@@ -9,8 +9,8 @@ import Image6 from '../../../images/nathan-dumlao-QvM7SCMFtVc-unsplash.jpg';
 
 const ScrollableContainer = styled.div`
   width: 100%;
-  height: 400px; /* Adjust height as needed */
-  overflow: auto;
+  height: 400px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +30,7 @@ const CubeContainer = styled.div`
   height: 200px;
   position: relative;
   perspective: 800px;
+  cursor: pointer;
 `;
 
 const Cube = styled.div`
@@ -37,7 +38,8 @@ const Cube = styled.div`
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  animation: ${rotateAnimation} 10s infinite linear;
+  animation: ${({ isDisassembled }) => (isDisassembled ? 'none' : `${rotateAnimation} 10s infinite linear ease-in-out`)};
+  will-change: transform;
 `;
 
 const CubeFace = styled.div`
@@ -47,63 +49,56 @@ const CubeFace = styled.div`
   background-size: cover;
   background-position: center;
   border: 2px solid black;
+  transition: transform 1s ease-in-out;
 `;
 
 const FrontFace = styled(CubeFace)`
-  transform: translateZ(100px);
-  /*background-image: url('../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg');*/
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(300px)' : 'translateZ(100px)')};
   background-image: url(${Image1});
-  object-fit: contain;
-   background-size: cover;                                     background-position: center;
 `;
 
 const BackFace = styled(CubeFace)`
-  transform: translateZ(-100px) rotateY(180deg);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(-300px)' : 'translateZ(-100px) rotateY(180deg)')};
   background-image: url(${Image2});
-  object-fit: contain;
-   background-size: cover;                                     background-position: center;
 `;
 
 const RightFace = styled(CubeFace)`
-  transform: rotateY(90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateX(300px)' : 'rotateY(90deg) translateZ(100px)')};
   background-image: url(${Image3});
-  object-fit: contain;
-   background-size: cover;                                     background-position: center;
 `;
 
 const LeftFace = styled(CubeFace)`
-  transform: rotateY(-90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateX(-300px)' : 'rotateY(-90deg) translateZ(100px)')};
   background-image: url(${Image4});
-  object-fit: contain;
-   background-size: cover;                                     background-position: center;
 `;
 
 const TopFace = styled(CubeFace)`
-  transform: rotateX(90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateY(-300px)' : 'rotateX(90deg) translateZ(100px)')};
   background-image: url(${Image5});
-  object-fit: contain;
-   background-size: cover;                                     background-position: center;
 `;
 
 const BottomFace = styled(CubeFace)`
-  transform: rotateX(-90deg) translateZ(100px);
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateY(300px)' : 'rotateX(-90deg) translateZ(100px)')};
   background-image: url(${Image6});
-  object-fit: contain;
-  background-size: cover;
-  background-position: center;
 `;
 
 const CubeViewer = () => {
+  const [isDisassembled, setIsDisassembled] = useState(false);
+
+  const handleClick = () => {
+    setIsDisassembled(!isDisassembled);
+  };
+
   return (
     <ScrollableContainer>
-      <CubeContainer>
-        <Cube>
-          <FrontFace />
-          <BackFace />
-          <RightFace />
-          <LeftFace />
-          <TopFace />
-          <BottomFace />
+      <CubeContainer onClick={handleClick}>
+        <Cube isDisassembled={isDisassembled}>
+          <FrontFace isDisassembled={isDisassembled} />
+          <BackFace isDisassembled={isDisassembled} />
+          <RightFace isDisassembled={isDisassembled} />
+          <LeftFace isDisassembled={isDisassembled} />
+          <TopFace isDisassembled={isDisassembled} />
+          <BottomFace isDisassembled={isDisassembled} />
         </Cube>
       </CubeContainer>
     </ScrollableContainer>
