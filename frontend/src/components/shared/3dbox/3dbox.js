@@ -18,26 +18,25 @@ function Cube({ progress }) {
     "/images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
   ];
   const textures = useLoader(TextureLoader, texturePaths);
-
-  // Ensure textures use the correct color space
   textures.forEach((texture) => (texture.colorSpace = SRGBColorSpace));
 
   // State for split effect
   const [isSplit, setIsSplit] = useState(false);
 
-  // Define motion values and springs for each face **outside** of the loop
-  const motionValues = [
-    useMotionValue(0),
-    useMotionValue(0),
-    useMotionValue(0),
-    useMotionValue(0),
-    useMotionValue(0),
-    useMotionValue(0),
-  ];
-  
-  const positions = motionValues.map((motionValue) =>
-    useSpring(motionValue, { damping: 10, stiffness: 100 })
-  );
+  // Define motion values and springs individually at the top level
+  const motionValue0 = useMotionValue(0);
+  const motionValue1 = useMotionValue(0);
+  const motionValue2 = useMotionValue(0);
+  const motionValue3 = useMotionValue(0);
+  const motionValue4 = useMotionValue(0);
+  const motionValue5 = useMotionValue(0);
+
+  const position0 = useSpring(motionValue0, { damping: 10, stiffness: 100 });
+  const position1 = useSpring(motionValue1, { damping: 10, stiffness: 100 });
+  const position2 = useSpring(motionValue2, { damping: 10, stiffness: 100 });
+  const position3 = useSpring(motionValue3, { damping: 10, stiffness: 100 });
+  const position4 = useSpring(motionValue4, { damping: 10, stiffness: 100 });
+  const position5 = useSpring(motionValue5, { damping: 10, stiffness: 100 });
 
   // Automatic rotation speeds (randomized)
   const rotationSpeed = useRef({
@@ -49,17 +48,21 @@ function Cube({ progress }) {
   // Handle mouse enter (split effect)
   const handleMouseEnter = () => {
     setIsSplit(true);
-    positions[0].set(1.5); // Front moves forward
-    positions[1].set(-1.5); // Back moves backward
-    positions[2].set(-1.5); // Left moves left
-    positions[3].set(1.5); // Right moves right
-    positions[4].set(1.5); // Top moves up
-    positions[5].set(-1.5); // Bottom moves down
+    position0.set(1.5);
+    position1.set(-1.5);
+    position2.set(-1.5);
+    position3.set(1.5);
+    position4.set(1.5);
+    position5.set(-1.5);
 
-    // Reassemble after 2 seconds
     setTimeout(() => {
       setIsSplit(false);
-      positions.forEach((p) => p.set(0)); // Move all faces back
+      position0.set(0);
+      position1.set(0);
+      position2.set(0);
+      position3.set(0);
+      position4.set(0);
+      position5.set(0);
     }, 2000);
   };
 
@@ -75,32 +78,32 @@ function Cube({ progress }) {
   return (
     <motion.group ref={mesh} rotation-y={progress} rotation-x={progress} onPointerEnter={handleMouseEnter}>
       {/* Cube Faces */}
-      <motion.mesh position={[0, 0, positions[0].get()]}>
+      <motion.mesh position={[0, 0, position0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[0]} />
       </motion.mesh>
 
-      <motion.mesh position={[0, 0, positions[1].get() * -1]}>
+      <motion.mesh position={[0, 0, -position1]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[1]} />
       </motion.mesh>
 
-      <motion.mesh position={[positions[2].get() * -1, 0, 0]}>
+      <motion.mesh position={[-position2, 0, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[2]} />
       </motion.mesh>
 
-      <motion.mesh position={[positions[3].get(), 0, 0]}>
+      <motion.mesh position={[position3, 0, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[3]} />
       </motion.mesh>
 
-      <motion.mesh position={[0, positions[4].get(), 0]}>
+      <motion.mesh position={[0, position4, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[4]} />
       </motion.mesh>
 
-      <motion.mesh position={[0, positions[5].get() * -1, 0]}>
+      <motion.mesh position={[0, -position5, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[5]} />
       </motion.mesh>
