@@ -113,15 +113,32 @@ function Cube({ progress }) {
 
 export default Cube;
 */
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+
+const ScrollableContainer = styled.div`
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const rotateAnimation = keyframes`
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+`;
 
 const CubeContainer = styled.div`
   width: 200px;
   height: 200px;
   position: relative;
   perspective: 800px;
-  margin:250px;
 `;
 
 const Cube = styled.div`
@@ -129,7 +146,7 @@ const Cube = styled.div`
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
-  transform: ${({ rotation }) => rotation};
+  animation: ${rotateAnimation} 10s infinite linear;
 `;
 
 const CubeFace = styled.div`
@@ -165,35 +182,20 @@ const BottomFace = styled(CubeFace)`
 `;
 
 const CubeViewer = () => {
-    const [rotation, setRotation] = useState({ x: 0, y: 0 });
-
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            setRotation({ x: -e.clientY, y: e.clientX });
-        };
-
-        document.addEventListener('mousemove',
-            handleMouseMove);
-
-        return () => {
-            document.removeEventListener('mousemove',
-                handleMouseMove);
-        };
-    }, []);
-
-    return (
-        <CubeContainer>
-            <Cube rotation={`
-            rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`}>
-                <FrontFace color="red"></FrontFace>
-                <BackFace color="blue"></BackFace>
-                <RightFace color="green"></RightFace>
-                <LeftFace color="yellow"></LeftFace>
-                <TopFace color="orange"></TopFace>
-                <BottomFace color="purple"></BottomFace>
-            </Cube>
-        </CubeContainer>
-    );
+  return (
+    <ScrollableContainer>
+      <CubeContainer>
+        <Cube>
+          <FrontFace color="red"></FrontFace>
+          <BackFace color="blue"></BackFace>
+          <RightFace color="green"></RightFace>
+          <LeftFace color="yellow"></LeftFace>
+          <TopFace color="orange"></TopFace>
+          <BottomFace color="purple"></BottomFace>
+        </Cube>
+      </CubeContainer>
+    </ScrollableContainer>
+  );
 };
 
 export default CubeViewer;
