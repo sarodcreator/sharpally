@@ -40,7 +40,8 @@ const Cube = styled.div`
   transform-style: preserve-3d;
   animation: ${({ isDisassembled }) =>
     isDisassembled ? 'none' : css`${rotateAnimation} 10s infinite linear`};
-  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+  transform: ${({ rotation }) => `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`};
 `;
 
 const CubeFace = styled.div`
@@ -50,43 +51,56 @@ const CubeFace = styled.div`
   background-size: cover;
   background-position: center;
   border: 2px solid black;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 `;
 
 const FrontFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(300px)' : 'translateZ(100px)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(150px)' : 'translateZ(100px)')};
   background-image: url(${Image1});
 `;
 
 const BackFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(-300px) rotateY(180deg)' : 'translateZ(-100px) rotateY(180deg)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'translateZ(-150px) rotateY(180deg)' : 'translateZ(-100px) rotateY(180deg)')};
   background-image: url(${Image2});
 `;
 
 const RightFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(90deg) translateZ(300px)' : 'rotateY(90deg) translateZ(100px)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(90deg) translateZ(150px)' : 'rotateY(90deg) translateZ(100px)')};
   background-image: url(${Image3});
 `;
 
 const LeftFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(-90deg) translateZ(300px)' : 'rotateY(-90deg) translateZ(100px)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateY(-90deg) translateZ(150px)' : 'rotateY(-90deg) translateZ(100px)')};
   background-image: url(${Image4});
 `;
 
 const TopFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(90deg) translateZ(300px)' : 'rotateX(90deg) translateZ(100px)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(90deg) translateZ(150px)' : 'rotateX(90deg) translateZ(100px)')};
   background-image: url(${Image5});
 `;
 
 const BottomFace = styled(CubeFace)`
-  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(-90deg) translateZ(300px)' : 'rotateX(-90deg) translateZ(100px)')};
+  transform: ${({ isDisassembled }) => (isDisassembled ? 'rotateX(-90deg) translateZ(150px)' : 'rotateX(-90deg) translateZ(100px)')};
   background-image: url(${Image6});
 `;
 
 const CubeViewer = () => {
   const [isDisassembled, setIsDisassembled] = useState(false);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
 
   const handleClick = () => {
+    if (!isDisassembled) {
+      // Capture the current rotation before disassembling
+      const computedStyle = window.getComputedStyle(document.querySelector('.cube'));
+      const transformMatrix = computedStyle.transform;
+      if (transformMatrix !== 'none') {
+        const values = transformMatrix.split('(')[1].split(')')[0].split(',');
+        const [a, b, c, d] = values.map(parseFloat);
+        const angleX = Math.round(Math.atan2(c, d) * (180 / Math.PI));
+        const angleY = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+        setRotation({ x: angleX, y: angleY });
+      }
+    }
     setIsDisassembled(true);
   };
 
@@ -94,7 +108,7 @@ const CubeViewer = () => {
     if (isDisassembled) {
       const timer = setTimeout(() => {
         setIsDisassembled(false);
-      }, 500); // Reassemble after 0.5 seconds
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [isDisassembled]);
@@ -102,7 +116,7 @@ const CubeViewer = () => {
   return (
     <ScrollableContainer>
       <CubeContainer onClick={handleClick}>
-        <Cube isDisassembled={isDisassembled}>
+        <Cube className="cube" isDisassembled={isDisassembled} rotation={rotation}>
           <FrontFace isDisassembled={isDisassembled} />
           <BackFace isDisassembled={isDisassembled} />
           <RightFace isDisassembled={isDisassembled} />
