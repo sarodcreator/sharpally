@@ -6,6 +6,7 @@ import { useSpring, useMotionValue } from 'framer-motion';
 import Image1 from '../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg';
 import Image2 from '../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg';
 import Image3 from '../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg';
+import { SRGBColorSpace } from 'three';
 
 function Cube({ progress }) {
     const mesh = useRef(null);
@@ -19,13 +20,16 @@ function Cube({ progress }) {
 	    Image2,
 	    Image3,
     ];
-    const textures = texturePaths.map(path => useLoader(TextureLoader, path));
+  const textures = useLoader(TextureLoader, texturePaths);
 
     // State for split effect
     const [isSplit, setIsSplit] = useState(false);
 
     // Motion values for face separation
-    const positions = Array(6).fill(null).map(() => useSpring(useMotionValue(0), { damping: 10, stiffness: 100 }));
+    const positions = Array(6).fill(null).map(() => {
+    const motionValue = useMotionValue(0);
+    return useSpring(motionValue, { damping: 10, stiffness: 100 });
+});
 
     // Automatic rotation speeds (randomized)
     const rotationSpeed = useRef({
