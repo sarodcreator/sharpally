@@ -10,12 +10,12 @@ function Cube({ progress }) {
 
   // Load textures
   const texturePaths = [
-    "../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg",
-    "../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg",
-    "../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
-    "../../../images/adi-goldstein-EUsVwEOsblE-unsplash.jpg",
-    "../../../images/alex-knight-2EJCSULRwC8-unsplash.jpg",
-    "../../../images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
+    "/images/adi-goldstein-EUsVwEOsblE-unsplash.jpg",
+    "/images/alex-knight-2EJCSULRwC8-unsplash.jpg",
+    "/images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
+    "/images/adi-goldstein-EUsVwEOsblE-unsplash.jpg",
+    "/images/alex-knight-2EJCSULRwC8-unsplash.jpg",
+    "/images/christina-wocintechchat-com-glRqyWJgUeY-unsplash.jpg",
   ];
   const textures = useLoader(TextureLoader, texturePaths);
 
@@ -25,10 +25,19 @@ function Cube({ progress }) {
   // State for split effect
   const [isSplit, setIsSplit] = useState(false);
 
-  // Initialize motion values & springs for face separation
-  const positions = Array(6)
-    .fill(null)
-    .map(() => useSpring(useMotionValue(0), { damping: 10, stiffness: 100 }));
+  // Define motion values and springs for each face **outside** of the loop
+  const motionValues = [
+    useMotionValue(0),
+    useMotionValue(0),
+    useMotionValue(0),
+    useMotionValue(0),
+    useMotionValue(0),
+    useMotionValue(0),
+  ];
+  
+  const positions = motionValues.map((motionValue) =>
+    useSpring(motionValue, { damping: 10, stiffness: 100 })
+  );
 
   // Automatic rotation speeds (randomized)
   const rotationSpeed = useRef({
@@ -65,38 +74,33 @@ function Cube({ progress }) {
 
   return (
     <motion.group ref={mesh} rotation-y={progress} rotation-x={progress} onPointerEnter={handleMouseEnter}>
-      {/* Front Face */}
-      <motion.mesh position-z={positions[0]}>
+      {/* Cube Faces */}
+      <motion.mesh position={[0, 0, positions[0].get()]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[0]} />
       </motion.mesh>
 
-      {/* Back Face */}
-      <motion.mesh position-z={positions[1]}>
+      <motion.mesh position={[0, 0, positions[1].get() * -1]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[1]} />
       </motion.mesh>
 
-      {/* Left Face */}
-      <motion.mesh position-x={positions[2]}>
+      <motion.mesh position={[positions[2].get() * -1, 0, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[2]} />
       </motion.mesh>
 
-      {/* Right Face */}
-      <motion.mesh position-x={positions[3]}>
+      <motion.mesh position={[positions[3].get(), 0, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[3]} />
       </motion.mesh>
 
-      {/* Top Face */}
-      <motion.mesh position-y={positions[4]}>
+      <motion.mesh position={[0, positions[4].get(), 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[4]} />
       </motion.mesh>
 
-      {/* Bottom Face */}
-      <motion.mesh position-y={positions[5]}>
+      <motion.mesh position={[0, positions[5].get() * -1, 0]}>
         <boxGeometry args={[2.5, 2.5, 2.5]} />
         <meshStandardMaterial map={textures[5]} />
       </motion.mesh>
