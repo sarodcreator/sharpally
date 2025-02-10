@@ -28,6 +28,7 @@
     "react-toastify": "^11.0.3",
     "sass": "^1.84.0",
     "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.15",
     "swiper": "^11.2.2",
     "three": "^0.149.0"
   },
