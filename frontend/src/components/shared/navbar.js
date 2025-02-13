@@ -25,7 +25,7 @@ const navbar = () => {
         !user ? (
           <div className='auth-btns'>
             <Link to='/login'><button className='auth-btn'>Login</button></Link>
-            <Link to='signup'><button className='auth-btn reg'>Create Account</button></Link>
+            <Link to='/signup'><button className='auth-btn reg'>Create Account</button></Link>
           </div>
         ) : (
           <Popover >
