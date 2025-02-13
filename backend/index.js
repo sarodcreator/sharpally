@@ -8,13 +8,13 @@ import Connectdb from "./utils/db.js";
 import router from "./routes/route.js";
 import companyRouter from "./routes/company-route.js"
 import jobRoute from "./routes/job-route.js"
-import applicationRoute from "./routes/application-route,js";
+import applicationRoute from "./routes/application-route.js";
 
 dotenv.config({})
 
 const corOptions = {
     origin: 'http://localhost:5173',
-    Credentials: true,
+    credentials: true,
 }
 
 const app = express();
