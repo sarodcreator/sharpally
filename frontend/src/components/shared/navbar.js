@@ -16,9 +16,9 @@ const navbar = () => {
       {/* navigation menu */}
       <div className="nav">
         <ul>
-          <li><link to="/home">Home</link></li>
-          <li><link to="/jobs">Jobs</link></li>
-          <li><link to="/discover">Browse</link></li>
+  	    <li><Link to="/home">Home</Link></li>
+            <li><Link to="/jobs">Jobs</Link></li>
+            <li><Link to="/discover">Browse</Link></li>
         </ul>
       </div>
       {
