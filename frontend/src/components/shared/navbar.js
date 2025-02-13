@@ -16,16 +16,16 @@ const navbar = () => {
       {/* navigation menu */}
       <div className="nav">
         <ul>
-          <li><link to="/home">Home</link></li>
-          <li><link to="/jobs">Jobs</link></li>
-          <li><link to="/discover">Browse</link></li>
+  	        <Link to="/home"><li>Home</li></Link>
+            <Link to="/jobs"><li>Jobs</li></Link>
+            <Link to="/discover"><li>Browse</li></Link>
         </ul>
       </div>
       {
         !user ? (
           <div className='auth-btns'>
             <Link to='/login'><button className='auth-btn'>Login</button></Link>
-            <Link to='signup'><button className='auth-btn reg'>Create Account</button></Link>
+            <Link to='/signup'><button className='auth-btn reg'>Create Account</button></Link>
           </div>
         ) : (
           <Popover >
