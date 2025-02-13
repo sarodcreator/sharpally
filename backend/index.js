@@ -14,7 +14,7 @@ dotenv.config({})
 
 const corOptions = {
     origin: 'http://localhost:5173',
-    Credentials: true,
+    credentials: true,
 }
 
 const app = express();
