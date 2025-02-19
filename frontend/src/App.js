@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './auth/login';
 import Signup from './auth/signup';
 import Home from './home/index';
-import Discover from './jobs/index';
-import Jobs from './discover/index';
+import Discover from './discover/index';
+import Jobs from './jobs/index';
 
 const appRoutes = createBrowserRouter([
   {
