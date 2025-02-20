@@ -469,6 +469,7 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    
 }
 .filter-sec {
     background-color: #fcfcfc;
@@ -479,15 +480,165 @@
     border: 1px solid rgba(18, 18, 18, 0.08);
     width: 100%;
     display: flex;
-    gap: 40px;
+    gap: 8px;
 }
 .job-cards {
     display: grid;
     grid-template-columns: auto auto auto;
-    gap: 40px;
+    gap: 16px;
 }
 /* job card section */
+.jobcard {
+    border: 1px solid rgb(18, 18, 18, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+.jobcard-title{
+    display: flex;
+    justify-content: space-between;
+}
+.jobcard-title p {
+    font-size: 12px;
+    color: rgb(100, 100, 100);
+    font-family: 'Open Sans', serif;
+    font-weight: 500;
+}
+.jobcard-title button {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    color: #121212;
+}
+.jobcard-company-info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.jobcard-img img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #121212;
+    border-radius: 50%;
+}
+.jobcard-dts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.jobcard-dts h1{
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Open Sans', serif;
+    margin-bottom: -16px;
+    padding: 0;
+}
+.jobcard-dts p {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Open Sans', serif;
+    color: #121212;
+}
+.jobcard-des h1{
+    font-weight: 500;
+    font-family: 'Open Sans', serif;
+    color: #121212;
+    font-size: 24px;
+    margin-top: 16px;
+    color: #121212;
+}
+.jobcard-des p{
+    font-size: 14px;
+    color: #727272;
+}
+.jobcard-btns {
+    display: flex;
+    gap: 16px;
+}
+.jobcard-btn {
+    background-color: transparent;
+    outline: none;
+    border: 1px solid rgb(100, 100, 100);
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.jobcard-btn:hover {
+    background-color: rgb(0, 148, 148);
+    color: #fcfcfc;
+    border: 1px solid transparent;
+}
+.save {
+    border: 1px solid transparent;
+    background-color: #1c3f3f;
+    color: #fcfcfc;
+}
+.jobcard-banners {
+    display: flex;
+    gap: 24px;
+}
+.jobcard-banners p {
+    font-size: 12px;
+    color: #121212;
+    margin-bottom: 40px;
+}
+/* filter section */
+.filtersec {
+    width: 30%;
+    border: 1px solid rgb(18, 18, 18, 0.08);
+    border-radius: 16px;
+    padding: 24px 40px 24px 24px;
+    box-sizing: border-box;
 
+}
+/* filtercard section */
+.filtersec-heading {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Open Sans", serif;
+
+}
+.filter-search{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    border: 1px solid #727272;
+    border-radius: 4px;
+    padding: 8px 0 8px 8px;
+}
+.filter-search:focus {
+    outline: 1.5px solid #121212;
+    color: #121212;
+}
+.filter-search input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #121212;
+}
+.filter-search button{
+    align-items: center;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #121212;
+}
+.filterType h2 {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Open Sans', serif;
+    color: #121212;
+}
+.filteritem{
+    color: #727272;
+    align-items: center;
+}
+.filteritem label{
+    font-size: 14px;
+}
 
 /* footer section */
 .footer{

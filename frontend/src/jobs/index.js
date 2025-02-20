@@ -13,7 +13,7 @@ const index = () => {
         <Navbar />
         <div className='filter-sec'>
             {/*filter section*/}
-            <div>
+            <div className="filtersec">
                 <Filter />
             </div>
             {/*job card*/}
