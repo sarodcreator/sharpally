@@ -465,10 +465,11 @@
 }
 /* Job section */
 .job-sec {
-    width: 100%;
+    width: calc(100% - 80px);
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 16px;
+    padding: 0 40px;
     
 }
 .filter-sec {
@@ -631,10 +632,14 @@
     font-weight: 600;
     font-family: 'Open Sans', serif;
     color: #121212;
+    margin-top: 24px;
 }
 .filteritem{
     color: #727272;
     align-items: center;
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
 }
 .filteritem label{
     font-size: 14px;

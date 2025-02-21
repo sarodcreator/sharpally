@@ -1,9 +1,15 @@
 import './index.css';
-import React from 'react'
+import React from 'react';
+import Navbar from '../components/shared/navbar';
 
 const index = () => {
   return (
-    <div>index</div>
+    <div>
+      <Navbar />
+      <div>
+
+      </div>
+    </div>
   )
 }
 
