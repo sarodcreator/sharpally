@@ -1,49 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Filters = ({ jobs, setFilteredJobs }) => {
-  const jobCategories = ["All", "Tech", "Healthcare", "Finance", "Marketing", "Education"];
+const Filter = ({ setSelectedCategory }) => {
+  const [categories, setCategories] = useState([]);
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    let filtered = jobs;
-
-    if (name === "location") {
-      filtered = filtered.filter(job => job.location.toLowerCase().includes(value.toLowerCase()));
-    }
-    if (name === "salary") {
-      filtered = filtered.filter(job => job.salary && parseInt(job.salary) >= parseInt(value));
-    }
-    if (name === "skill") {
-      filtered = filtered.filter(job => job.title.toLowerCase().includes(value.toLowerCase()));
-    }
-    if (name === "category" && value !== "All") {
-      filtered = filtered.filter(job => job.category && job.category.toLowerCase() === value.toLowerCase());
-    }
-
-    setFilteredJobs(filtered);
-  };
+  useEffect(() => {
+    fetch("https://remotive.io/api/remote-jobs/categories")
+      .then(response => response.json())
+      .then(data => setCategories(data.jobs))
+      .catch(error => console.error("Error fetching categories:", error));
+  }, []);
 
   return (
     <div>
-      <h3>Filter Jobs</h3>
-      
-      <label>Location:</label>
-      <input type="text" name="location" onChange={handleFilterChange} />
-      
-      <label>Minimum Salary:</label>
-      <input type="number" name="salary" onChange={handleFilterChange} />
-      
-      <label>Skill:</label>
-      <input type="text" name="skill" onChange={handleFilterChange} />
-      
-      <label>Category:</label>
-      <select name="category" onChange={handleFilterChange}>
-        {jobCategories.map((category, index) => (
-          <option key={index} value={category}>{category}</option>
+      <label>Select Job Category:</label>
+      <select onChange={(e) => setSelectedCategory(e.target.value)}>
+        <option value="">All</option>
+        {categories.map((category, index) => (
+          <option key={index} value={category.slug}>
+            {category.name}
+          </option>
         ))}
       </select>
     </div>
   );
 };
 
-export default Filters;
+export default Filter;
