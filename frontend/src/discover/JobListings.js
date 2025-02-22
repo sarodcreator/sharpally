@@ -1,95 +1,89 @@
 import React, { useEffect, useState } from "react";
-import Filters from "./Filters";
+import Filter from "./Filter";
 import JobAlerts from "./JobAlerts";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
-  const [savedJobs, setSavedJobs] = useState(() => {
-    return JSON.parse(localStorage.getItem("savedJobs")) || [];
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [appliedJobs, setAppliedJobs] = useState(
+    JSON.parse(localStorage.getItem("appliedJobs")) || []
+  );
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    fetchJobs();
+    fetch("https://remotive.io/api/remote-jobs")
+      .then(response => response.json())
+      .then(data => setJobs(data.jobs))
+      .catch(error => console.error("Error fetching jobs:", error));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("savedJobs", JSON.stringify(savedJobs));
-  }, [savedJobs]);
+  // Filter jobs based on search term and category
+  const filteredJobs = jobs.filter(job =>
+    job.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === "" || job.category === selectedCategory)
+  );
 
-  // Fetch jobs dynamically from API
-  const fetchJobs = async () => {
-    try {
-      const response = await fetch("https://api.indeed.com/v2/search?q=high-demand jobs&location=remote&limit=20&apikey=YOUR_API_KEY");
-      const data = await response.json();
-      
-      // Add a category field based on job title
-      const categorizedJobs = data.results.map(job => ({
-        ...job,
-        category: categorizeJob(job.title)
-      }));
+  // Handle Job Application
+  const handleApply = (job) => {
+    window.open(job.url, "_blank");
 
-      setJobs(categorizedJobs);
-      setFilteredJobs(categorizedJobs);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    }
-  };
-
-  // Categorize jobs
-  const categorizeJob = (title) => {
-    if (title.toLowerCase().includes("developer") || title.toLowerCase().includes("engineer")) return "Tech";
-    if (title.toLowerCase().includes("nurse") || title.toLowerCase().includes("doctor")) return "Healthcare";
-    if (title.toLowerCase().includes("finance") || title.toLowerCase().includes("accountant")) return "Finance";
-    if (title.toLowerCase().includes("marketing") || title.toLowerCase().includes("sales")) return "Marketing";
-    if (title.toLowerCase().includes("teacher") || title.toLowerCase().includes("education")) return "Education";
-    return "Other";
-  };
-
-  // Save/Unsave Jobs
-  const toggleSaveJob = (job) => {
-    const isSaved = savedJobs.some(savedJob => savedJob.id === job.id);
-    if (isSaved) {
-      setSavedJobs(savedJobs.filter(savedJob => savedJob.id !== job.id));
-    } else {
-      setSavedJobs([...savedJobs, job]);
+    if (!appliedJobs.some(appliedJob => appliedJob.id === job.id)) {
+      const updatedAppliedJobs = [...appliedJobs, job];
+      setAppliedJobs(updatedAppliedJobs);
+      localStorage.setItem("appliedJobs", JSON.stringify(updatedAppliedJobs));
     }
   };
 
   return (
     <div>
-      <h2>High-Demand Job Listings</h2>
-      <Filters jobs={jobs} setFilteredJobs={setFilteredJobs} />
+      <h2>Remote Job Listings</h2>
 
-      {/* Display Jobs */}
+      {/* Search Filter */}
+      <input
+        type="text"
+        placeholder="Search jobs..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      {/* Job Category Filter */}
+      <Filter setSelectedCategory={setSelectedCategory} />
+
       <ul>
-        {filteredJobs.map((job, index) => (
-          <li key={index}>
-            <a href={job.url} target="_blank" rel="noopener noreferrer">{job.title}</a>
-            <p>{job.location} | {job.salary ? `$${job.salary}` : "Salary not disclosed"} | {job.category}</p>
-            <button onClick={() => toggleSaveJob(job)}>
-              {savedJobs.some(savedJob => savedJob.id === job.id) ? "Unsave" : "Save"}
-            </button>
+        {filteredJobs.map(job => (
+          <li key={job.id}>
+            <a href={job.url} target="_blank" rel="noopener noreferrer">
+              <h3>{job.title} at {job.company_name}</h3>
+            </a>
+            <p>{job.salary ? job.salary : "Salary not disclosed"}</p>
+            <p>Location: {job.candidate_required_location}</p>
+
+            {appliedJobs.some(appliedJob => appliedJob.id === job.id) ? (
+              <button disabled style={{ backgroundColor: "gray" }}>Applied</button>
+            ) : (
+              <button onClick={() => handleApply(job)}>Apply Now</button>
+            )}
           </li>
         ))}
       </ul>
 
-      {/* View Saved Jobs */}
-      <h3>Saved Jobs</h3>
-      <ul>
-        {savedJobs.length > 0 ? (
-          savedJobs.map((job, index) => (
-            <li key={index}>
-              <a href={job.url} target="_blank" rel="noopener noreferrer">{job.title}</a>
-              <button onClick={() => toggleSaveJob(job)}>Remove</button>
+      {/* Applied Jobs Section */}
+      <h2>Applied Jobs</h2>
+      {appliedJobs.length > 0 ? (
+        <ul>
+          {appliedJobs.map(job => (
+            <li key={job.id}>
+              <a href={job.url} target="_blank" rel="noopener noreferrer">
+                {job.title} at {job.company_name}
+              </a>
             </li>
-          ))
-        ) : (
-          <p>No saved jobs yet.</p>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p>No applied jobs yet.</p>
+      )}
 
-      {/* Job Alerts */}
+      {/* Job Alerts Section */}
       <JobAlerts />
     </div>
   );
