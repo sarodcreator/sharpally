@@ -1,25 +1,27 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";
 
 const JobAlerts = () => {
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
+    setMessage("");
 
-    const templateParams = {
-      user_email: email,
-      message: "You will receive alerts for high-demand jobs based on your preferences!"
-    };
-
-    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams, "YOUR_USER_ID")
-      .then((response) => {
-        alert("Subscription successful! You will receive job alerts.");
-        setEmail("");
-      })
-      .catch((error) => {
-        console.error("Error sending email:", error);
+    try {
+      const response = await fetch("http://localhost:5000/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
       });
+
+      const data = await response.json();
+      setMessage(data.message);
+      if (response.ok) setEmail("");
+    } catch (error) {
+      setMessage("Error subscribing. Please try again.");
+      console.error("Subscription error:", error);
+    }
   };
 
   return (
@@ -35,6 +37,7 @@ const JobAlerts = () => {
         />
         <button type="submit">Subscribe</button>
       </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };
